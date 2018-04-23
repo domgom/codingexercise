@@ -12,18 +12,18 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import(TestConfiguration)
-class FooBarControllerSpec extends Specification {
+class PrimesControllerSpec extends Specification {
 
     @Autowired
     TestRestTemplate restTemplate
 
-    def 'Foo test'() {
+    def 'Primes until 6'() {
         when:
-        def entity = restTemplate.getForEntity('/foo', Bar)
+        def entity = restTemplate.getForEntity('/primes/6', PrimeResponse)
         then:
         entity.statusCode == HttpStatus.OK
-        entity.body.name == 'Dom'
-        entity.body.age == 35
+        entity.body.initial == "6"
+        entity.body.primes == [2, 3]
 
     }
 }
