@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = PrimesApplication)
-class SingleThreadStrategySpec extends Specification {
+class BigIntegerBuiltInStrategySpec extends Specification {
 
     @Autowired
     BigIntegerBuiltInStrategy singleThreadStrategy
