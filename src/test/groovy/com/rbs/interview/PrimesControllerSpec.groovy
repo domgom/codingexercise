@@ -19,7 +19,7 @@ class PrimesControllerSpec extends Specification {
 
     def 'Primes until 6'() {
         when:
-        def entity = restTemplate.getForEntity('/primes/6', PrimeResponse)
+        def entity = restTemplate.getForEntity('/primes/6', PrimesResponse)
         then:
         entity.statusCode == HttpStatus.OK
         entity.body.initial == "6"

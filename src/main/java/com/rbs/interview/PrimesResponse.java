@@ -9,7 +9,7 @@ import java.util.List;
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @JsonFormat()
-public class PrimeResponse {
+public class PrimesResponse {
 
     @JsonProperty("Initial")
     @JsonFormat(shape = STRING)
@@ -17,11 +17,11 @@ public class PrimeResponse {
     @JsonProperty("Primes")
     private List<BigInteger> primes;
 
-    public PrimeResponse() {
+    public PrimesResponse() {
 
     }
 
-    public PrimeResponse(BigInteger initial, List<BigInteger> primes) {
+    public PrimesResponse(BigInteger initial, List<BigInteger> primes) {
         this.initial = initial;
         this.primes = primes;
     }

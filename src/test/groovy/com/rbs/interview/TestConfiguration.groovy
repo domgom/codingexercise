@@ -7,7 +7,7 @@ class TestConfiguration {
     private final detachedMockFactory = new DetachedMockFactory()
 
     @Bean
-    PrimeCalculatorService externalApiClient() {
-        detachedMockFactory.Mock(PrimeCalculatorService)
+    PrimesCalculatorService externalApiClient() {
+        detachedMockFactory.Mock(PrimesCalculatorService)
     }
 }
