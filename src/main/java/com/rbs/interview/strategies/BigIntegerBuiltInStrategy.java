@@ -20,6 +20,11 @@ public class BigIntegerBuiltInStrategy implements PrimesCalculatorStrategy {
     private static final int CERTAINTY = 100;
 
     @Override
+    public AvailableStrategy name() {
+        return AvailableStrategy.BIG_INTEGER_BUILT_IN;
+    }
+
+    @Override
     public PrimesResponse calculatePrimesUntilLimit(BigInteger limit) {
         List<BigInteger> primes = new ArrayList<>();
 

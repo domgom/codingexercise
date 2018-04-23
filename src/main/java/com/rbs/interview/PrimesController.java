@@ -1,5 +1,6 @@
 package com.rbs.interview;
 
+import com.rbs.interview.strategies.AvailableStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,8 @@ class PrimesController {
     PrimesCalculatorService primesCalculatorService;
 
     @GetMapping(value = "/primes/{limit}")
-    PrimesResponse primesUntil(@PathVariable("limit") BigInteger limit, @RequestParam("strategy") Optional<String> strategy) {
+    PrimesResponse primesUntil(@PathVariable("limit") BigInteger limit,
+                               @RequestParam("strategy") Optional<AvailableStrategy> strategy) {
         return primesCalculatorService.primesUntil(limit, strategy);
     }
 }

@@ -18,7 +18,7 @@ public class PrimesResponse {
     private List<BigInteger> primes;
 
     public PrimesResponse() {
-
+        //Required for Jackson Mapping
     }
 
     public PrimesResponse(BigInteger initial, List<BigInteger> primes) {

@@ -18,12 +18,14 @@ class PrimesControllerSpec extends Specification {
     TestRestTemplate restTemplate
 
     def 'Primes until 6'() {
+        given:
+        BigInteger limit = 6
         when:
-        def entity = restTemplate.getForEntity('/primes/6', PrimesResponse)
+        def entity = restTemplate.getForEntity('/primes/' + limit, PrimesResponse)
         then:
         entity.statusCode == HttpStatus.OK
-        entity.body.initial == "6"
-        entity.body.primes == [2, 3]
+        entity.body.initial == limit
+        entity.body.primes == [2, 3, 5]
 
     }
 }

@@ -7,4 +7,6 @@ import java.math.BigInteger;
 public interface PrimesCalculatorStrategy {
 
     PrimesResponse calculatePrimesUntilLimit(BigInteger limit);
+
+    AvailableStrategy name();
 }
