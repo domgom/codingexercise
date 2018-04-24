@@ -24,20 +24,25 @@ public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrateg
     public PrimesResponse calculatePrimesUntilLimit(BigInteger bigLimit) {
         // We are constrained by the BitSet size to be Integer.MAX_VALUE
         int limit = bigLimit.intValueExact();
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Limit has to be > 0");
+        }
         long startTime = System.currentTimeMillis();
         // Initialises positions filled with 0
-        BitSet isComposite = new BitSet(limit + 1);
-        // 0 and 1 are not composite
-        isComposite.set(0);
-        isComposite.set(1);
+        BitSet isPrime = new BitSet(limit + 1);
+        // All numbers are supposed prime before the sieve
+        isPrime.flip(0, limit + 1);
+        // 0 and 1 are prime
+        isPrime.clear(0);
+        isPrime.clear(1);
 
 
         for (int i = 2; i * i <= limit; i += 1) {
             //If the number is in the list is because it wasn't marked as composite
-            if (!isComposite.get(i)) {
+            if (isPrime.get(i)) {
                 // We mark all the multiples of the prime
                 for (int j = 2; i * j <= limit; j += 1) {
-                    isComposite.set(i * j);
+                    isPrime.clear(i * j);
                 }
             }
         }
@@ -46,7 +51,7 @@ public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrateg
         List<BigInteger> primes = new ArrayList<>(estimatedSize(limit));
 
         for (int i = 1; i <= limit; i++) {
-            if (!isComposite.get(i)) {
+            if (isPrime.get(i)) {
                 primes.add(BigInteger.valueOf(i));
             }
         }
@@ -58,7 +63,7 @@ public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrateg
     }
 
     private int estimatedSize(int limit) {
-        if (limit < 2){
+        if (limit < 2) {
             return 0;
         }
         //The Prime Number Theorem: The number of primes not exceeding x is asymptotic to x/log x.

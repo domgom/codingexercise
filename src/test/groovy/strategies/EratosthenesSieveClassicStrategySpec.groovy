@@ -47,20 +47,18 @@ class EratosthenesSieveClassicStrategySpec extends Specification {
         given:
         BigInteger limit = 0
         when:
-        PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
+        eratosthenesClassic.calculatePrimesUntilLimit(limit)
         then:
-        response.initial == limit
-        response.primes == []
+        thrown(IllegalArgumentException)
     }
 
-    def 'Calculates primes until -1 with no results'() {
+    def 'Calculates primes until -1 with returning IllegalArgumentException'() {
         given:
         BigInteger limit = -1
         when:
-        PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
+        eratosthenesClassic.calculatePrimesUntilLimit(limit)
         then:
-        response.initial == limit
-        response.primes == []
+        thrown(IllegalArgumentException)
     }
 
     def 'Calculates primes until 2000'() {
