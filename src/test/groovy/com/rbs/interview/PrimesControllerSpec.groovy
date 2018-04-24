@@ -1,50 +1,29 @@
 package com.rbs.interview
 
 import com.rbs.interview.strategies.AvailableStrategy
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.context.annotation.Import
-import org.springframework.http.HttpStatus
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
-
-
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@Import(TestConfiguration)
 class PrimesControllerSpec extends Specification {
 
-    @Autowired
-    TestRestTemplate restTemplate
+    PrimesCalculatorService primesCalculatorService = Mock(PrimesCalculatorService)
+    PrimesController primesController = new PrimesController(primesCalculatorService: primesCalculatorService)
 
     @Unroll
-    def 'Primes until #limit with default strategy'() {
+    def 'PrimesController.primesUntil( #limit ) with strategy #strategy'() {
         when:
-        def entity = restTemplate.getForEntity('/primes/' + limit, PrimesResponse)
+        PrimesResponse response = primesController.primesUntil(limit, strategy)
         then:
-        entity.statusCode == HttpStatus.OK
-        entity.body.initial == limit
-        entity.body.primes == [2, 3, 5]
-        where:
-        limit = 6
-
-    }
-
-    @Unroll
-    def 'Primes until #limit with selected strategies'() {
-        when:
-        def entity = restTemplate.getForEntity('/primes/' + limit + '?strategy=' + strategy, PrimesResponse)
-        then:
-        entity.statusCode == HttpStatus.OK
-        entity.body.initial == limit
-        entity.body.primes == [2, 3, 5, 7, 11]
+        1 * primesCalculatorService.primesUntil(limit, strategy) >> new PrimesResponse(limit, [2, 3, 5])
+        0 * _
+        response.primes == [2, 3, 5]
+        response.initial == limit
         where:
         limit | strategy
-        12    | ''  // Uses default
-        12    | AvailableStrategy.BIG_INTEGER_BUILT_IN.name()
-        12    | AvailableStrategy.ERATHOSTENES_SIEVE_CLASSIC.name()
+        6     | Optional.empty()
+        6     | Optional.of(AvailableStrategy.ERATHOSTENES_SIEVE_CLASSIC)
+        6     | Optional.of(AvailableStrategy.BIG_INTEGER_BUILT_IN)
+
 
     }
 }
