@@ -6,6 +6,7 @@ import com.rbs.interview.strategies.EratosthenesSieveClassicStrategy
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
+import spock.lang.Unroll
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = PrimesApplication)
 class EratosthenesSieveClassicStrategySpec extends Specification {
@@ -13,52 +14,28 @@ class EratosthenesSieveClassicStrategySpec extends Specification {
     @Autowired
     EratosthenesSieveClassicStrategy eratosthenesClassic
 
-    def 'Calculates primes until 6'() {
-        given:
-        BigInteger limit = 6
+    @Unroll
+    def 'Calculates primes until #limit'() {
         when:
         PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
         then:
         response.initial == limit
-        response.primes == [2, 3, 5]
+        response.primes == primes
+        where:
+        limit | primes
+        6     | [2, 3, 5]
+        5     | [2, 3, 5]
+        1     | []
     }
 
-    def 'Calculates primes until 5 (included)'() {
-        given:
-        BigInteger limit = 5
-        when:
-        PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
-        then:
-        response.initial == limit
-        response.primes == [2, 3, 5]
-    }
-
-    def 'Calculates primes until 1 with no results'() {
-        given:
-        BigInteger limit = 1
-        when:
-        PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
-        then:
-        response.initial == limit
-        response.primes == []
-    }
-
-    def 'Calculates primes until 0 with no results'() {
-        given:
-        BigInteger limit = 0
+    @Unroll
+    def 'Calculates primes until #limit with returning IllegalArgumentException'() {
         when:
         eratosthenesClassic.calculatePrimesUntilLimit(limit)
         then:
         thrown(IllegalArgumentException)
-    }
-
-    def 'Calculates primes until -1 with returning IllegalArgumentException'() {
-        given:
-        BigInteger limit = -1
-        when:
-        eratosthenesClassic.calculatePrimesUntilLimit(limit)
-        then:
-        thrown(IllegalArgumentException)
+        where:
+        limit << [-1, 0]
     }
 
     def 'Calculates primes until 2000'() {
@@ -68,7 +45,7 @@ class EratosthenesSieveClassicStrategySpec extends Specification {
         PrimesResponse response = eratosthenesClassic.calculatePrimesUntilLimit(limit)
         then:
         response.initial == limit
-        response.primes.size() ==  303
+        response.primes.size() == 303
         response.primes.last() == 1999
     }
 }
