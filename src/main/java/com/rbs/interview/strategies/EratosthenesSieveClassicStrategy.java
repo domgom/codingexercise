@@ -27,7 +27,6 @@ public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrateg
         if (limit <= 0) {
             throw new IllegalArgumentException("Limit has to be > 0");
         }
-        long startTime = System.currentTimeMillis();
         // Initialises positions filled with 0
         BitSet isPrime = new BitSet(limit + 1);
         // All numbers are supposed prime before the sieve
@@ -55,9 +54,6 @@ public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrateg
                 primes.add(BigInteger.valueOf(i));
             }
         }
-
-        long stopTime = System.currentTimeMillis();
-        System.out.println((stopTime - startTime) + " milliseconds.");
 
         return new PrimesResponse(bigLimit, primes);
     }
