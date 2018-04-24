@@ -4,7 +4,7 @@ import com.rbs.interview.PrimesResponse;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.math.BigInteger.TWO;
@@ -12,7 +12,7 @@ import static java.math.BigInteger.TWO;
 /**
  * Uses the internal {@link BigInteger} method {@link BigInteger#isProbablePrime(int)} to iterate among the next
  * candidates and {@link BigInteger#isProbablePrime(int)} to run the verification.
- * Delegates most of the implementation for convenience at the expense of further sieve  optimisation.
+ * Delegates most of the implementation for convenience at the expense of further optimisation.
  */
 @Component
 public class BigIntegerBuiltInStrategy implements PrimesCalculatorStrategy {
@@ -26,7 +26,7 @@ public class BigIntegerBuiltInStrategy implements PrimesCalculatorStrategy {
 
     @Override
     public PrimesResponse calculatePrimesUntilLimit(BigInteger limit) {
-        List<BigInteger> primes = new ArrayList<>();
+        List<BigInteger> primes = new LinkedList<>();
 
         BigInteger index = TWO;
 
