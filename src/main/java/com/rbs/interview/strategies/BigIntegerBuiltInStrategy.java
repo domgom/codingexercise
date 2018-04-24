@@ -13,6 +13,7 @@ import static java.math.BigInteger.TWO;
  * Uses the internal {@link BigInteger} method {@link BigInteger#isProbablePrime(int)} to iterate among the next
  * candidates and {@link BigInteger#isProbablePrime(int)} to run the verification.
  * Delegates most of the implementation for convenience at the expense of further optimisation.
+ * It uses Rabin-Miller or Lucas Lehmer primality tests.
  */
 @Component
 public class BigIntegerBuiltInStrategy implements PrimesCalculatorStrategy {

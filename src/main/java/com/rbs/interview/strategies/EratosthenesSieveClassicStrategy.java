@@ -9,7 +9,7 @@ import java.util.BitSet;
 import java.util.List;
 
 /**
- * Sieve of Erathostenes with a single thread
+ * Classic Sieve of Erathostenes.
  */
 @Component
 public class EratosthenesSieveClassicStrategy implements PrimesCalculatorStrategy {
